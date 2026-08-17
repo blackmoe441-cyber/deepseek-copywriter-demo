@@ -1,0 +1,303 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: day10-weather-bot
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.19@1aa3c64e2f50179afe8410ad79412dab92bf5919a27da8e2b13071b5e5f8ce81
+    version: null
+kind: app
+version: 0.7.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload: {}
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1786958561217-source-1786958662098-target
+      source: '1786958561217'
+      sourceHandle: source
+      target: '1786958662098'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1786958662098-source-1786959577197-target
+      source: '1786958662098'
+      sourceHandle: source
+      target: '1786959577197'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: llm
+      id: 1786958921586-source-1786959104978-target
+      source: '1786958921586'
+      sourceHandle: source
+      target: '1786959104978'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1786959104978-source-1786959156282-target
+      source: '1786959104978'
+      sourceHandle: source
+      target: '1786959156282'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: 1786959577197-source-1786958921586-target
+      source: '1786959577197'
+      sourceHandle: source
+      target: '1786958921586'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: 请输入城市名
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: city_name
+      height: 108
+      id: '1786958561217'
+      position:
+        x: 80
+        y: 272
+      positionAbsolute:
+        x: 80
+        y: 272
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: ca2776ef-d1b3-427b-b5f9-d540dc74f6b6
+          role: system
+          text: 请从用户输入的原文提取城市名，只输出城市名，不要加任何解释或标点。如北京、上海、广州、深圳
+        selected: false
+        structured_output_enabled: true
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1786958662098'
+      position:
+        x: 387.4842834334896
+        y: 293
+      positionAbsolute:
+        x: 387.4842834334896
+        y: 293
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        headers: ''
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: https://api.open-meteo.com/v1/forecast?latitude={{#1786959577197.lat#}}&longitude={{#1786959577197.lon#}}&current_weather=true
+        variables: []
+      height: 189
+      id: '1786958921586'
+      position:
+        x: 993
+        y: 293
+      positionAbsolute:
+        x: 993
+        y: 293
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: ccfae8e6-a9f0-4988-a4fb-79896977daaf
+          role: system
+          text: '你是一位天气播报员。请根据提供的天气数据，用一句话告诉用户今天天气怎么样。
+
+
+            回复要求：
+
+            - 包含接收到的城市名
+
+            - 包含温度和天气状况
+
+            - 语气自然友好
+
+            - 控制在 50 字以内'
+        selected: false
+        title: LLM 2
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1786959104978'
+      position:
+        x: 1295
+        y: 293
+      positionAbsolute:
+        x: 1295
+        y: 293
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        outputs:
+        - value_selector:
+          - '1786959104978'
+          - text
+          value_type: string
+          variable: weather_reply
+        selected: false
+        title: 输出
+        type: end
+      height: 88
+      id: '1786959156282'
+      position:
+        x: 1597
+        y: 293
+      positionAbsolute:
+        x: 1597
+        y: 293
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        code: "def main(city: str) -> dict:\n    city_map = {\n        \"北京\": {\"\
+          lat\": 39.90, \"lon\": 116.41},\n        \"上海\": {\"lat\": 31.23, \"lon\"\
+          : 121.47},\n        \"广州\": {\"lat\": 23.13, \"lon\": 113.26},\n       \
+          \ \"深圳\": {\"lat\": 22.54, \"lon\": 114.06},\n    }\n    \n    result =\
+          \ city_map.get(city, {\"lat\": 31.23, \"lon\": 121.47})\n    \n    return\
+          \ {\n        \"lat\": result[\"lat\"],\n        \"lon\": result[\"lon\"\
+          ]\n    }"
+        code_language: python3
+        outputs:
+          lat:
+            children: null
+            type: number
+          lon:
+            children: null
+            type: number
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1786958662098'
+          - text
+          value_type: string
+          variable: city
+      height: 51
+      id: '1786959577197'
+      position:
+        x: 683.1640918466162
+        y: 293
+      positionAbsolute:
+        x: 683.1640918466162
+        y: 293
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    viewport:
+      x: 161.54270464608385
+      y: 106.66291703476733
+      zoom: 0.6597539553864471
+  rag_pipeline_variables: []
