@@ -130,7 +130,7 @@ workflow:
         prompt_template:
         - id: ca2776ef-d1b3-427b-b5f9-d540dc74f6b6
           role: system
-          text: 请从用户输入的原文提取城市名，只输出城市名，不要加任何解释或标点。如北京、上海、广州、深圳
+          text: '请从用户输入的原文{{#1786958561217.city_name#}}提取城市名，只输出城市名，不要加任何解释或标点。 '
         selected: false
         structured_output_enabled: true
         title: LLM
@@ -207,7 +207,7 @@ workflow:
 
             回复要求：
 
-            - 包含接收到的城市名
+            - 包含接收到的城市名{{#1786958662098.text#}}
 
             - 包含温度和天气状况
 
@@ -227,7 +227,7 @@ workflow:
       positionAbsolute:
         x: 1295
         y: 293
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -297,7 +297,7 @@ workflow:
       width: 242
       zIndex: 0
     viewport:
-      x: 161.54270464608385
-      y: 106.66291703476733
+      x: -311.45729535391627
+      y: 131.66291703476733
       zoom: 0.6597539553864471
   rag_pipeline_variables: []
