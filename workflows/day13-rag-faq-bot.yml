@@ -1,0 +1,242 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: day13-rag-faq-bot
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.19@1aa3c64e2f50179afe8410ad79412dab92bf5919a27da8e2b13071b5e5f8ce81
+    version: null
+kind: app
+version: 0.7.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload: {}
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1787131249451-source-1787132481920-target
+      source: '1787131249451'
+      sourceHandle: source
+      target: '1787132481920'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1787131337609-source-1787131523368-target
+      source: '1787131337609'
+      sourceHandle: source
+      target: '1787131523368'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: template-transform
+      id: 1787132481920-source-1787132949384-target
+      source: '1787132481920'
+      sourceHandle: source
+      target: '1787132949384'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: template-transform
+        targetType: llm
+      id: 1787132949384-source-1787131337609-target
+      source: '1787132949384'
+      sourceHandle: source
+      target: '1787131337609'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: question
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: question
+      height: 108
+      id: '1787131249451'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables: []
+        prompt_template:
+        - id: 6127d985-0bdb-408d-8a47-72977a39a394
+          role: system
+          text: '你是一位教培机构客服。请根据下面提供的参考资料{{#1787132949384.output#}}回答家长问题{{#1787131249451.question#}}。
+
+
+            要求：
+
+            1. 优先使用参考资料里的信息
+
+            2. 如果参考资料里没有，诚实说"这个问题我需要确认后回复您"
+
+            3. 语气友好专业
+
+            4. 控制在 100 字以内'
+        - id: 01d39640-59db-455c-8740-194c2f1ce2aa
+          role: assistant
+          text: ''
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1787131337609'
+      position:
+        x: 1017
+        y: 303
+      positionAbsolute:
+        x: 1017
+        y: 303
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        outputs:
+        - value_selector:
+          - '1787131337609'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 输出
+        type: end
+      height: 88
+      id: '1787131523368'
+      position:
+        x: 1319
+        y: 303
+      positionAbsolute:
+        x: 1319
+        y: 303
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        dataset_ids:
+        - oivPiiR50daMA9ZMcZWGNtJSkH5ekX41l+ko92iwGm+B4Ulgp7TlnYWiLQ9M1vP3
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          reranking_model: null
+          score_threshold: null
+          top_k: 4
+          weights: null
+        query_attachment_selector: []
+        query_variable_selector:
+        - '1787131249451'
+        - question
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 89
+      id: '1787132481920'
+      position:
+        x: 402
+        y: 303
+      positionAbsolute:
+        x: 402
+        y: 303
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        selected: false
+        template: '{{ retrieval_result }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1787132481920'
+          - result
+          value_type: array[object]
+          variable: retrieval_result
+      height: 51
+      id: '1787132949384'
+      position:
+        x: 717
+        y: 303
+      positionAbsolute:
+        x: 717
+        y: 303
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    viewport:
+      x: 115.9371844021349
+      y: 152.70083540801446
+      zoom: 0.5743491774985174
+  rag_pipeline_variables: []
