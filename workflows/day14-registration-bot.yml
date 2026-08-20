@@ -1,0 +1,234 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: day14-registration-bot
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.19@1aa3c64e2f50179afe8410ad79412dab92bf5919a27da8e2b13071b5e5f8ce81
+    version: null
+kind: app
+version: 0.7.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload: {}
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        iteration_id: null
+        loop_id: null
+        sourceType: start
+        targetType: parameter-extractor
+      id: 1787210383895-source-1787210446671-target
+      selected: false
+      source: '1787210383895'
+      sourceHandle: source
+      target: '1787210446671'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        iteration_id: null
+        loop_id: null
+        sourceType: parameter-extractor
+        targetType: template-transform
+      id: 1787210446671-source-1787210690385-target
+      selected: false
+      source: '1787210446671'
+      sourceHandle: source
+      target: '1787210690385'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        iteration_id: null
+        loop_id: null
+        sourceType: template-transform
+        targetType: end
+      id: 1787210690385-source-1787210870905-target
+      selected: false
+      source: '1787210690385'
+      sourceHandle: source
+      target: '1787210870905'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: text
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: text
+      height: 108
+      id: '1787210383895'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        parameters:
+        - description: 家长称呼，例如爸爸、妈妈
+          name: parent_name
+          required: false
+          type: string
+        - description: 学员姓名
+          name: child_name
+          required: false
+          type: string
+        - description: 学员年龄，数字
+          name: child_age
+          required: false
+          type: string
+        - description: 联系电话，11位手机号
+          name: phone
+          required: false
+          type: string
+        - description: 意向课程，例如编程、英语、数学
+          name: course
+          required: false
+          type: string
+        - description: 预约时间，例如本周六上午
+          name: time
+          required: false
+          type: string
+        query:
+        - '1787210383895'
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: 参数提取器
+        type: parameter-extractor
+        vision:
+          enabled: false
+      height: 87
+      id: '1787210446671'
+      position:
+        x: 384
+        y: 298
+      positionAbsolute:
+        x: 384
+        y: 298
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        selected: false
+        template: "课程预约登记\r\n============\r\n家长称呼：{{parent_name }}\r\n学员姓名：{{ child_name\
+          \ }}\r\n学员年龄：{{ child_age }}\r\n联系电话：{{ phone }}\r\n意向课程：{{ course }}\r\n\
+          预约时间：{{ time }}\r\n备注：无"
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1787210446671'
+          - parent_name
+          variable: parent_name
+        - value_selector:
+          - '1787210446671'
+          - child_name
+          variable: child_name
+        - value_selector:
+          - '1787210446671'
+          - child_age
+          variable: child_age
+        - value_selector:
+          - '1787210446671'
+          - phone
+          variable: phone
+        - value_selector:
+          - '1787210446671'
+          - course
+          variable: course
+        - value_selector:
+          - '1787210446671'
+          - time
+          variable: time
+      height: 51
+      id: '1787210690385'
+      position:
+        x: 687.5157165665105
+        y: 298
+      positionAbsolute:
+        x: 687.5157165665105
+        y: 298
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        outputs:
+        - value_selector:
+          - '1787210690385'
+          - output
+          value_type: string
+          variable: output
+        selected: false
+        title: 输出
+        type: end
+      height: 88
+      id: '1787210870905'
+      position:
+        x: 988
+        y: 298
+      positionAbsolute:
+        x: 988
+        y: 298
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    viewport:
+      x: -833.9064756917122
+      y: -22.854837408986043
+      zoom: 1.1486983549970353
+  rag_pipeline_variables: []
